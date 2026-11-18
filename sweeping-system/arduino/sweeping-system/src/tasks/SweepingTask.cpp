@@ -17,82 +17,22 @@ SweepingTask::SweepingTask(Button* pButton, ServoMotor* pMotor, Context* pContex
 void SweepingTask::tick(){
     switch (state){    
     case IDLE: {
-        if (this->checkAndSetJustEntered()){
-            Logger.log(F("[SWT] IDLE"));
-        }
-        if (pButton->isPressed()){
-            setState(STARTING);
-        }
+        
         break;
     }
     case WORKING: {        
-        if (this->checkAndSetJustEntered()){
-            Logger.log(F("[SWT] SWEEPING_FWD"));
-        }
         
-        /* update motor pos*/
-
-        long dt = elapsedTimeInState();
-        currentPos = (((float) dt)/FWD_TIME)*180;
-        pMotor->setPosition(currentPos);
-
-        if (pButton->isPressed()){
-            pContext->setStopped();
-            Logger.log(F("[SWT] STOPPED!"));
-            setState(RESETTING);
-        } else if (dt > FWD_TIME){
-            setState(SWEEPING_BWD);
-        }
         break;       
     }
-    case SWEEPING_BWD: {        
-        if (this->checkAndSetJustEntered()){
-            Logger.log(F("[SWT] SWEEPING_BWD"));
-        }
-
-        /* update motor pos*/
+    case PRE_ALARM: {        
         
-        long dt = elapsedTimeInState();
-        currentPos = (((float) dt)/BWD_TIME)*180;
-        pMotor->setPosition(currentPos);
-
-        if (pButton->isPressed()){
-            Logger.log(F("[SWT] STOPPED!"));
-            pContext->setStopped();
-            toBeStopped = true;
-        } 
-        
-        if (dt > BWD_TIME){
-            if (!toBeStopped){
-                setState(SWEEPING_FWD);
-            } else {
-                setState(RESETTING);    
-            }
-        }
         break;       
     }
-    case STARTING: {
-        if (this->checkAndSetJustEntered()){
-            Logger.log(F("[SWT] STARTING"));
-        }
-        if (elapsedTimeInState() > START_TIME){
-            pContext->setStarted();
-            pMotor->on();
-            currentPos = 0;
-            toBeStopped = false;
-            setState(SWEEPING_FWD);
-        }
-        break;
+    case ALARM: {
+        
     }
     case RESETTING: {
-        if (this->checkAndSetJustEntered()){
-            Logger.log(F("[SWT] RESETTING"));
-        }
-        pMotor->setPosition(0);
-        if (elapsedTimeInState() > RESET_TIME){
-            pMotor->off();
-            setState(IDLE);
-        }
+        
     }
     }
 }
