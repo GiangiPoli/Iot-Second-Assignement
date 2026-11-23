@@ -7,6 +7,7 @@
 #include "devices/LightSensorImpl.h"
 #include "devices/ServoMotorImpl.h"
 #include "kernel/Logger.h"
+#include "devices/Pot.h"
 
 void wakeUp(){}
 
@@ -14,6 +15,7 @@ HWPlatform::HWPlatform(){
   pButton = new ButtonImpl(BT_PIN);
   pLed = new Led(LED_PIN);
   pMotor = new ServoMotorImpl(MOTOR_PIN);
+  pPot = new Potentiometer(POT_PIN);
 }
 
 
@@ -24,6 +26,9 @@ Button* HWPlatform::getButton(){
   return this->pButton;
 }
 
+Potentiometer* HWPlatform::getPot(){
+  return this->pPot;
+}
 
 Led*  HWPlatform::getLed(){
   return this->pLed;

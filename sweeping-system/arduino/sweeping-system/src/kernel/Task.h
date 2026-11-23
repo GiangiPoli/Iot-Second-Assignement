@@ -61,6 +61,10 @@ public:
     timeElapsed = 0;
     this->active = active;
   }
+
+  int setPeriod(int period) {
+    myPeriod = period;
+  }
   
 private:
 
