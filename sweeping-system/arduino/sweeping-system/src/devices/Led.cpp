@@ -13,3 +13,11 @@ void Led::switchOn(){
 void Led::switchOff(){
   digitalWrite(pin,LOW);
 };
+
+void Led::invert(){
+  if(digitalRead(pin) == LOW) {
+    this->switchOn();
+  } else {
+    this->switchOff();
+  }
+}

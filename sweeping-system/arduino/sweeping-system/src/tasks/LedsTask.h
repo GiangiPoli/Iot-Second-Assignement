@@ -19,11 +19,12 @@ private:
   
   bool checkAndSetJustEntered();
   
-  enum { IDLE, OFF, ON } state;
+  enum { IDLE, WORKING, ALARM } state;
   long stateTimestamp;
   bool justEntered;
 
-  Led* pLed;
+  Led* greenLed;
+  Led* redLed;
   Context* pContext;
 };
 
