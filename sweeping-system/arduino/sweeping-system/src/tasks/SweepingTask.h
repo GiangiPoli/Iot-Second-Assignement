@@ -4,13 +4,14 @@
 #include "kernel/Task.h"
 #include "devices/ServoMotor.h"
 #include "devices/Button.h"
+#include "devices/Pot.h"
 #include "model/Context.h"
 #include <Arduino.h>
 
 class SweepingTask: public Task {
 
 public:
-  SweepingTask(Button* pButton, ServoMotor* pMotor, Context* pContext); 
+  SweepingTask(Potentiometer* pPot,ServoMotor* pMotor, Context* pContext); 
   void tick();
 
 private:  
@@ -20,15 +21,16 @@ private:
   
   bool checkAndSetJustEntered();
   
-  enum { IDLE, WORKING, PRE_ALARM, ALARM, RESETTING } state;
+  enum { IDLE, WORKING, PRE_ALARM, ALARM} state;
   long stateTimestamp;
   bool justEntered;
 
-  Button* pButton;
   ServoMotor* pMotor;
   Context* pContext;
+  Potentiometer* pPot;
 
   int currentPos;
+  int increaseAngle;
   bool toBeStopped;
 };
 

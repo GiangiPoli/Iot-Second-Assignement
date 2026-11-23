@@ -27,8 +27,8 @@ void setup() {
 #ifndef __TESTING_HW__
   pContext = new Context();
 
-  Task* pSweepingTask = new SweepingTask(pHWPlatform->getButton(), pHWPlatform->getMotor(), pContext);
-  pSweepingTask->init(50);
+  Task* pSweepingTask = new SweepingTask(pHWPlatform->getPot(), pHWPlatform->getMotor(), pContext);
+  pSweepingTask->init(100);
 
   Task* pBlinkingTask = new BlinkingTask(pHWPlatform->getLed(), pContext);
   pBlinkingTask->init(100);

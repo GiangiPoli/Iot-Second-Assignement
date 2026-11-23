@@ -49,4 +49,3 @@ void Context::reset(){
   preAlarm = false;
   idel = false;
 }
-
