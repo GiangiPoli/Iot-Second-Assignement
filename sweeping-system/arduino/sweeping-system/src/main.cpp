@@ -6,7 +6,7 @@
 #include "model/HWPlatform.h"
 #include "tasks/TestHWTask.h"
 #include "tasks/SweepingTask.h"
-#include "tasks/BlinkingTask.h"
+#include "tasks/LedsTask.h"
 
 //#define __TESTING_HW__
 
@@ -30,13 +30,11 @@ void setup() {
   Task* pSweepingTask = new SweepingTask(pHWPlatform->getPot(), pHWPlatform->getMotor(), pContext);
   pSweepingTask->init(100);
 
-  Task* pBlinkingTask = new BlinkingTask(pHWPlatform->getLed(), pContext);
-  pBlinkingTask->init(100);
-
-  Task* LedsTask = new LedsTask()
+  Task* pLedsTask = new BlinkingTask(pHWPlatform->getGreenLed(), pHWPlatform->getRedLed(), pContext);
+  pLedsTask->init(100);
 
   sched.addTask(pSweepingTask);
-  sched.addTask(pBlinkingTask);
+  sched.addTask(pLedsTask);
 #endif
 
 #ifdef __TESTING_HW__
