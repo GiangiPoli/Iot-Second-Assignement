@@ -33,6 +33,8 @@ void setup() {
   Task* pBlinkingTask = new BlinkingTask(pHWPlatform->getLed(), pContext);
   pBlinkingTask->init(100);
 
+  Task* LedsTask = new LedsTask()
+
   sched.addTask(pSweepingTask);
   sched.addTask(pBlinkingTask);
 #endif

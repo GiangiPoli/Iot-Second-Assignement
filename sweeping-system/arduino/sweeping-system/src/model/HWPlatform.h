@@ -15,13 +15,15 @@ public:
   void test();
 
   Button* getButton();
-  Led*  getLed();
+  Led*  getGreenLed();
+  Led*  getRedLed();
   ServoMotor* getMotor();
   Potentiometer* getPot();
 
 private:
   Button* pButton;
-  Led* pLed;
+  Led* greenLed;
+  Led* redLed;
   ServoMotor* pMotor;
   Potentiometer* pPot;
   

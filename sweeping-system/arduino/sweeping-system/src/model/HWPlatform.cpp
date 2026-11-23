@@ -13,7 +13,8 @@ void wakeUp(){}
 
 HWPlatform::HWPlatform(){
   pButton = new ButtonImpl(BT_PIN);
-  pLed = new Led(LED_PIN);
+  greenLed = new Led(GREEN_LED);
+  redLed = new Led(RED_LED);
   pMotor = new ServoMotorImpl(MOTOR_PIN);
   pPot = new Potentiometer(POT_PIN);
 }
@@ -30,8 +31,12 @@ Potentiometer* HWPlatform::getPot(){
   return this->pPot;
 }
 
-Led*  HWPlatform::getLed(){
-  return this->pLed;
+Led*  HWPlatform::getGreenLed(){
+  return this->greenLed;
+}
+
+Led*  HWPlatform::getRedLed(){
+  return this->redLed;
 }
 
 ServoMotor* HWPlatform::getMotor(){
