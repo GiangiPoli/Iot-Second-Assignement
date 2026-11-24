@@ -3,75 +3,79 @@
 #include "config.h"
 #include "kernel/Logger.h"
 
-#define N 6
-#define S1 100
-#define S2 50
-
 
 SweepingTask::SweepingTask(Potentiometer* pPot,ServoMotor* pMotor, Context* pContext): 
     pPot(pPot), pMotor(pMotor), pContext(pContext){
     setState(IDLE);
 }
+
+void SweepingTask::resetSweep(){
+    dir = 1;
+    pMotor->setPosition(0);
+    pContext->clearScan();
+}
+
+void SweepingTask::sweep(){
+    int s = pContext->getSector() + dir;
+    if (s >= N - 1) {
+        s = N - 1;
+        dir = -1;
+    } else if (s <= 0) {
+        s = 0;
+        dir = 1;
+    }
+    pMotor->setPosition(s * 180 / (N - 1));
+    pContext->setSector(s);
+    pContext->setNewSector();
+}
   
 void SweepingTask::tick(){
     switch (state){    
     case IDLE: {
-        pMotor->setPosition(0);
-        currentPos = 0;
-        increaseAngle = 180/N;
+        resetSweep();
         if (pContext->isWorking()) {
+            pContext->setNewSector();
             setState(WORKING);
         }
         break;
     }
     case WORKING: {
-        currentPos = currentPos + increaseAngle;
-        pMotor->setPosition(currentPos);
-        if (currentPos == 180 || currentPos == 0) {
-            increaseAngle = -(180/N);
-        }
         if (pContext->isPreAlarm()) {
             setState(PRE_ALARM);
-        }
-        if (pContext->isIdle()) {
+        } else if (pContext->isIdle()) {
             setState(IDLE);
-        }
-        if (pContext->isAlarm()) {
+        } else if (pContext->isAlarm()) {
             setState(ALARM);
+        } else {
+            sweep();
         }
         break;       
     }
-    case PRE_ALARM: {
-        currentPos = currentPos + increaseAngle;
-        pMotor->setPosition(currentPos);
-        if (currentPos == 180 || currentPos == 0) {
-            increaseAngle = -increaseAngle;
-        }    
+    case PRE_ALARM: { 
         if (pContext->isAlarm()) {
             setState(ALARM);
-        }
-        if (pContext->isWorking()) {
+        } else if (pContext->isWorking()) {
             setState(WORKING);
-        } 
+        } else {
+            sweep();
+        }
         break;       
     }
     case ALARM: {
         pPot->sync();
         pMotor->setPosition(pPot->getValue() * 180);
-        if (pContext->isWorking() || pContext->isPreAlarm()) {
-            currentPos = 0;
-            increaseAngle = 180/N;
-            pMotor->setPosition(0);
-            setState(pContext->isPreAlarm() ? PRE_ALARM : WORKING);
+        if (pContext->isWorking()) {
+            resetSweep();
+            setState(WORKING);
         }
         break;
     }
     }
 }
 
-void SweepingTask::setState(int s){
-    state = s;
-    if (s == PRE_ALARM) {
+void SweepingTask::setState(int newState){
+    state = newState;
+    if (newState == PRE_ALARM) {
         this->setPeriod(S2);
     } else {
         this->setPeriod(S1);

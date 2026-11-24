@@ -18,7 +18,8 @@ private:
   void setState(int state);
   long elapsedTimeInState();
   void log(const String& msg);
-  
+  void resetSweep();
+  void sweep();
   bool checkAndSetJustEntered();
   
   enum { IDLE, WORKING, PRE_ALARM, ALARM} state;
@@ -29,7 +30,7 @@ private:
   Context* pContext;
   Potentiometer* pPot;
 
-  int currentPos;
+  int dir;
   int increaseAngle;
   bool toBeStopped;
 };
