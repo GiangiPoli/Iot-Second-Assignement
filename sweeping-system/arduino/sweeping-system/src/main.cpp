@@ -28,10 +28,10 @@ void setup() {
   pContext = new Context();
 
   Task* pSweepingTask = new SweepingTask(pHWPlatform->getPot(), pHWPlatform->getMotor(), pContext);
-  pSweepingTask->init(100);
+  pSweepingTask->init(MOTOR_PERIOD);
 
   Task* pLedsTask = new BlinkingTask(pHWPlatform->getGreenLed(), pHWPlatform->getRedLed(), pContext);
-  pLedsTask->init(100);
+  pLedsTask->init(LEDS_PERIOD);
 
   sched.addTask(pSweepingTask);
   sched.addTask(pLedsTask);
