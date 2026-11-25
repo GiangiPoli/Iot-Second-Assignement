@@ -25,6 +25,8 @@ private:
   TempSensor* tempSensor;
   Sonar* sonar;
   Context* pContext;
+  float d;
+  bool active;
 };
 
 #endif

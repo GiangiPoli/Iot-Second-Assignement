@@ -47,6 +47,7 @@ bool Context::isWorking(){
 
 void Context::setIdle(){
   state = ST_IDLE;
+  clearScan();
 }
 
 void Context::clearNewSector(){
