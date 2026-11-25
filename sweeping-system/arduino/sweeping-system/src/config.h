@@ -7,8 +7,8 @@
 #define S2 50
 
 #define BTN_START 2
-#define BTN_START 3
-#define BTN_START 4
+#define BTN_STOP 3
+#define BTN_RST 4
 #define PROX_ECHO 7
 #define PROX_TRIG 8
 #define MOTOR_PIN 9
