@@ -19,7 +19,6 @@ HWPlatform::HWPlatform(){
   pPot = new Potentiometer(POT_PIN);
 }
 
-
 void HWPlatform::init(){
 }
 
