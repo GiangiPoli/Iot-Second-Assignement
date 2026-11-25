@@ -12,7 +12,7 @@
 #define PROX_ECHO 7
 #define PROX_TRIG 8
 #define MOTOR_PIN 9
-#define TEMP_PIN 10
+#define TEMP_PIN A1
 #define RED_LED 12
 #define GREEN_LED 13
 #define POT_PIN A0
