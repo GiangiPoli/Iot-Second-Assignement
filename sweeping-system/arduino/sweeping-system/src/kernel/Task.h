@@ -62,7 +62,7 @@ public:
     this->active = active;
   }
 
-  int setPeriod(int period) {
+  void setPeriod(int period) {
     myPeriod = period;
   }
   

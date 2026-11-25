@@ -4,13 +4,13 @@
 #include "kernel/Task.h"
 #include "model/Context.h"
 #include "devices/Sonar.h"
-#include "devices/TempSensor.h"
+#include "devices/TempSensorTMP36.h"
 #include <Arduino.h>
 
 class SonarTask: public Task {
 
 public:
-  SonarTask(Sonar* sonar, Context* pContext, TempSensor* tempSensor); 
+  SonarTask(Sonar* sonar, Context* pContext, TempSensorTMP36* tempSensor); 
   void tick();
 
 private:  
@@ -19,14 +19,15 @@ private:
   
   bool checkAndSetJustEntered();
 
+  Sonar* sonar;
+  Context* pContext;
+  TempSensorTMP36* tempSensor;
+
   long stateTimestamp;
   bool justEntered;
 
-  TempSensor* tempSensor;
-  Sonar* sonar;
-  Context* pContext;
   float d;
-  bool active;
+  bool active, valid;
 };
 
 #endif

@@ -7,6 +7,8 @@
 #include "tasks/TestHWTask.h"
 #include "tasks/SweepingTask.h"
 #include "tasks/LedsTask.h"
+#include "tasks/ButtonsTask.h"
+#include "tasks/SonarTask.h"
 
 //#define __TESTING_HW__
 
@@ -30,11 +32,19 @@ void setup() {
   Task* pSweepingTask = new SweepingTask(pHWPlatform->getPot(), pHWPlatform->getMotor(), pContext);
   pSweepingTask->init(MOTOR_PERIOD);
 
-  Task* pLedsTask = new BlinkingTask(pHWPlatform->getGreenLed(), pHWPlatform->getRedLed(), pContext);
+  Task* pLedsTask = new LedsTask(pHWPlatform->getGreenLed(), pHWPlatform->getRedLed(), pContext);
   pLedsTask->init(LEDS_PERIOD);
+
+  Task* pSonarTask = new SonarTask(pHWPlatform->getSonar(), pContext, pHWPlatform->getTempSensor());
+  pSonarTask->init(SONAR_PERIOD);
+
+  Task* pButtonsTask = new ButtonsTask(pHWPlatform->getStart(), pHWPlatform->getStop(), pHWPlatform->getReset(), pContext);
+  pButtonsTask->init(BUTTONS_PERIOD);
 
   sched.addTask(pSweepingTask);
   sched.addTask(pLedsTask);
+  sched.addTask(pButtonsTask);
+  sched.addTask(pSonarTask);
 #endif
 
 #ifdef __TESTING_HW__

@@ -2,7 +2,7 @@
 #include "kernel/Logger.h"
 #include "config.h"
 
-SonarTask::SonarTask(Sonar* sonar, Context* pContext, TempSensor* tempSensor)
+SonarTask::SonarTask(Sonar* sonar, Context* pContext, TempSensorTMP36* tempSensor)
 	: sonar(sonar), pContext(pContext), tempSensor(tempSensor), stateTimestamp(0), justEntered(true) {}
 
 void SonarTask::tick() {

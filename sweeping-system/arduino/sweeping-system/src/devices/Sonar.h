@@ -2,8 +2,7 @@
 #define __SONAR__
 
 #include "ProximitySensor.h"
-
-#define NO_OBJ_DETECTED -1
+#include "config.h"
 
 class Sonar: public ProximitySensor {
 
