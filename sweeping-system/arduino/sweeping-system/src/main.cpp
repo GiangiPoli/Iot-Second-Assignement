@@ -19,7 +19,7 @@ Context* pContext;
 
 void setup() {
   MsgService.init();
-  sched.init(50);
+  sched.init(SCHED_PERIOD);
 
   Logger.log(":::::: Sweeping System ::::::");
   
